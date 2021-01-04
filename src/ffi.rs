@@ -295,7 +295,7 @@ mod cuda {
 
     #[repr(C)]
     #[derive(Debug, Copy, Clone)]
-    pub struct rmtCUDABind {
+    pub struct CUDABind {
         pub context: *mut ::std::os::raw::c_void,
         pub ctx_set_current: *mut ::std::os::raw::c_void,
         pub ctx_get_current: *mut ::std::os::raw::c_void,
@@ -309,17 +309,17 @@ mod cuda {
     #[test]
     fn bindgen_test_layout_rmt_cuda_bind() {
         assert_eq!(
-            ::std::mem::size_of::<rmtCUDABind>(),
+            ::std::mem::size_of::<CUDABind>(),
             64usize,
             concat!("Size of: ", stringify!(rmtCUDABind))
         );
         assert_eq!(
-            ::std::mem::align_of::<rmtCUDABind>(),
+            ::std::mem::align_of::<CUDABind>(),
             8usize,
             concat!("Alignment of ", stringify!(rmtCUDABind))
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).context as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).context as *const _ as usize },
             0usize,
             concat!(
                 "Offset of field: ",
@@ -329,7 +329,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).ctx_set_current as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).ctx_set_current as *const _ as usize },
             8usize,
             concat!(
                 "Offset of field: ",
@@ -339,7 +339,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).ctx_get_current as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).ctx_get_current as *const _ as usize },
             16usize,
             concat!(
                 "Offset of field: ",
@@ -349,7 +349,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).event_create as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).event_create as *const _ as usize },
             24usize,
             concat!(
                 "Offset of field: ",
@@ -359,7 +359,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).event_destroy as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).event_destroy as *const _ as usize },
             32usize,
             concat!(
                 "Offset of field: ",
@@ -369,7 +369,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).event_record as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).event_record as *const _ as usize },
             40usize,
             concat!(
                 "Offset of field: ",
@@ -379,7 +379,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe { &(*(::std::ptr::null::<rmtCUDABind>())).event_query as *const _ as usize },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).event_query as *const _ as usize },
             48usize,
             concat!(
                 "Offset of field: ",
@@ -389,9 +389,7 @@ mod cuda {
             )
         );
         assert_eq!(
-            unsafe {
-                &(*(::std::ptr::null::<rmtCUDABind>())).event_elapsed_time as *const _ as usize
-            },
+            unsafe { &(*(::std::ptr::null::<CUDABind>())).event_elapsed_time as *const _ as usize },
             56usize,
             concat!(
                 "Offset of field: ",
@@ -403,12 +401,12 @@ mod cuda {
     }
 
     extern "C" {
-        pub fn _rmt_BindCUDA(bind: *const rmtCUDABind);
+        pub fn _rmt_BindCUDA(bind: *const CUDABind);
     }
     extern "C" {
         pub fn _rmt_BeginCUDASample(
-            name: rmtPStr,
-            hash_cache: *mut rmtU32,
+            name: PStr,
+            hash_cache: *mut U32,
             stream: *mut ::std::os::raw::c_void,
         );
     }
@@ -430,7 +428,7 @@ mod dx11 {
         pub fn _rmt_UnbindD3D11();
     }
     extern "C" {
-        pub fn _rmt_BeginD3D11Sample(name: rmtPStr, hash_cache: *mut rmtU32);
+        pub fn _rmt_BeginD3D11Sample(name: PStr, hash_cache: *mut U32);
     }
     extern "C" {
         pub fn _rmt_EndD3D11Sample();
@@ -439,6 +437,7 @@ mod dx11 {
 
 #[cfg(feature = "opengl")]
 mod opengl {
+    use super::*;
     extern "C" {
         pub fn _rmt_BindOpenGL();
     }
@@ -455,6 +454,7 @@ mod opengl {
 
 #[cfg(feature = "metal")]
 mod metal {
+    use super::*;
     extern "C" {
         pub fn _rmt_BeginMetalSample(name: PStr, hash_cache: *mut U32);
     }
