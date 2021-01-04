@@ -5,5 +5,4 @@ authors = ["huisedenanhai <winser@pku.edu.cn>"]
 edition = "2018"
 
 [build-dependencies]
-bindgen = "0.53"
 cc = "1.0"
