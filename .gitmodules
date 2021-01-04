@@ -1,0 +1,3 @@
+[submodule "Remotery"]
+	path = Remotery
+	url = https://github.com/huisedenanhai/Remotery.git
