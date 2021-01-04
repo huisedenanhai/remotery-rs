@@ -1,8 +1,16 @@
 [package]
-name = "remotery-rs"
-version = "0.1.0"
 authors = ["huisedenanhai <winser@pku.edu.cn>"]
 edition = "2018"
+name = "remotery-rs"
+version = "0.1.0"
 
 [build-dependencies]
 cc = "1.0"
+
+[features]
+assume-little-endian = []
+cuda = []
+dx11 = []
+metal = []
+opengl = []
+posix-thread-names = []
