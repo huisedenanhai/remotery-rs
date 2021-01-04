@@ -59,6 +59,60 @@ pub enum Error {
     CudaUnknown = 44,
 }
 
+impl std::fmt::Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Error::None => f.write_str("None"),
+            Error::RecursiveSample => f.write_str("RecursiveSample"),
+            Error::MallocFail => f.write_str("MallocFail"),
+            Error::TlsAllocFail => f.write_str("TlsAllocFail"),
+            Error::VirtualMemoryBufferFail => f.write_str("VirtualMemoryBufferFail"),
+            Error::CreateThreadFail => f.write_str("CreateThreadFail"),
+            Error::SocketInitNetworkFail => f.write_str("SocketInitNetworkFail"),
+            Error::SocketCreateFail => f.write_str("SocketCreateFail"),
+            Error::SocketBindFail => f.write_str("SocketBindFail"),
+            Error::SocketListenFail => f.write_str("SocketListenFail"),
+            Error::SocketSetNonBlockingFail => f.write_str("SocketSetNonBlockingFail"),
+            Error::SocketInvalidPoll => f.write_str("SocketInvalidPoll"),
+            Error::SocketSelectFail => f.write_str("SocketSelectFail"),
+            Error::SocketPollErrors => f.write_str("SocketPollErrors"),
+            Error::SocketAcceptFail => f.write_str("SocketAcceptFail"),
+            Error::SocketSendTimeout => f.write_str("SocketSendTimeout"),
+            Error::SocketSendFail => f.write_str("SocketSendFail"),
+            Error::SocketRecvNoData => f.write_str("SocketRecvNoData"),
+            Error::SocketRecvTimeout => f.write_str("SocketRecvTimeout"),
+            Error::SocketRecvFailed => f.write_str("SocketRecvFailed"),
+            Error::WebsocketHandshakeNotGet => f.write_str("WebsocketHandshakeNotGet"),
+            Error::WebsocketHandshakeNoVersion => f.write_str("WebsocketHandshakeNoVersion"),
+            Error::WebsocketHandshakeBadVersion => f.write_str("WebsocketHandshakeBadVersion"),
+            Error::WebsocketHandshakeNoHost => f.write_str("WebsocketHandshakeNoHost"),
+            Error::WebsocketHandshakeBadHost => f.write_str("WebsocketHandshakeBadHost"),
+            Error::WebsocketHandshakeNoKey => f.write_str("WebsocketHandshakeNoKey"),
+            Error::WebsocketHandshakeBadKey => f.write_str("WebsocketHandshakeBadKey"),
+            Error::WebsocketHandshakeStringFail => f.write_str("WebsocketHandshakeStringFail"),
+            Error::WebsocketDisconnected => f.write_str("WebsocketDisconnected"),
+            Error::WebsocketBadFrameHeader => f.write_str("WebsocketBadFrameHeader"),
+            Error::WebsocketBadFrameHeaderSize => f.write_str("WebsocketBadFrameHeaderSize"),
+            Error::WebsocketBadFrameHeaderMask => f.write_str("WebsocketBadFrameHeaderMask"),
+            Error::WebsocketReceiveTimeout => f.write_str("WebsocketReceiveTimeout"),
+            Error::RemoteryNotCreated => f.write_str("RemoteryNotCreated"),
+            Error::SendOnIncompleteProfile => f.write_str("SendOnIncompleteProfile"),
+            Error::CudaDeinitialized => f.write_str("CudaDeinitialized"),
+            Error::CudaNotInitialized => f.write_str("CudaNotInitialized"),
+            Error::CudaInvalidContext => f.write_str("CudaInvalidContext"),
+            Error::CudaInvalidValue => f.write_str("CudaInvalidValue"),
+            Error::CudaInvalidHandle => f.write_str("CudaInvalidHandle"),
+            Error::CudaOutOfMemory => f.write_str("CudaOutOfMemory"),
+            Error::ErrorNotReady => f.write_str("ErrorNotReady"),
+            Error::D3d11FailedToCreateQuery => f.write_str("D3d11FailedToCreateQuery"),
+            Error::OpenglError => f.write_str("OpenglError"),
+            Error::CudaUnknown => f.write_str("CudaUnknown"),
+        }
+    }
+}
+
+impl std::error::Error for Error {}
+
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum SampleFlags {
