@@ -58,7 +58,7 @@ fn main() {
                 #version 140
                 out vec4 f_color;
                 void main() {
-                    f_color = vec4(0.5, 0.0, 0.5, 1.0);
+                    f_color = vec4(0.0, 0.5, 0.5, 1.0);
                 }
             "
          },
