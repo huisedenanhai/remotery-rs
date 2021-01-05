@@ -10,10 +10,8 @@ pub struct OpenGLSample;
 
 fn begin_opengl_sample(name: &str, hash_cache: &mut u32) {
     unsafe {
-        ffi::opengl::_rmt_BeginOpenGLSample(
-            std::ffi::CString::new(name).unwrap().as_ptr(),
-            hash_cache as *mut ffi::U32,
-        );
+        let name = std::ffi::CString::new(name).unwrap();
+        ffi::opengl::_rmt_BeginOpenGLSample(name.as_ptr(), hash_cache as *mut ffi::U32);
     }
 }
 

@@ -34,17 +34,24 @@ impl Remotery {
     }
 
     pub fn set_current_thread_name(&self, name: &str) {
-        unsafe { ffi::_rmt_SetCurrentThreadName(std::ffi::CString::new(name).unwrap().as_ptr()) }
+        unsafe {
+            let name = std::ffi::CString::new(name).unwrap();
+            ffi::_rmt_SetCurrentThreadName(name.as_ptr())
+        }
     }
 
     pub fn log_text(&self, text: &str) {
-        unsafe { ffi::_rmt_LogText(std::ffi::CString::new(text).unwrap().as_ptr()) }
+        unsafe {
+            let text = std::ffi::CString::new(text).unwrap();
+            ffi::_rmt_LogText(text.as_ptr())
+        }
     }
 
     pub fn begin_cpu_sample(&self, name: &str, flags: SampleFlags, hash_cache: &mut u32) {
         unsafe {
+            let name = std::ffi::CString::new(name).unwrap();
             ffi::_rmt_BeginCPUSample(
-                std::ffi::CString::new(name).unwrap().as_ptr(),
+                name.as_ptr(),
                 flags as ffi::U32,
                 hash_cache as *mut ffi::U32,
             )
