@@ -1,7 +1,3 @@
-mod ffi;
-use ffi::*;
-use std::ffi::CString;
-
 fn main() {
     unsafe {
         let mut remotery: *mut Remotery = std::ptr::null_mut();

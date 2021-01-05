@@ -1,3 +1,5 @@
+use std::{intrinsics::transmute, mem::MaybeUninit};
+
 pub type Bool = ::std::os::raw::c_uint;
 pub type U16 = ::std::os::raw::c_ushort;
 pub type U32 = ::std::os::raw::c_uint;
@@ -162,6 +164,21 @@ pub struct Settings {
     pub log_filename: PStr,
 }
 
+impl Default for Settings {
+    fn default() -> Self {
+        unsafe {
+            let mut settings: MaybeUninit<Settings> = MaybeUninit::uninit();
+            _rmt_DefaultSettings(settings.as_mut_ptr());
+            transmute(settings)
+        }
+    }
+}
+
+#[test]
+fn test_default_settings() {
+    println!("{:?}", Settings::default())
+}
+
 #[test]
 fn bindgen_test_layout_settings() {
     assert_eq!(
@@ -315,6 +332,9 @@ fn bindgen_test_layout_settings() {
     );
 }
 
+extern "C" {
+    pub fn _rmt_DefaultSettings(settings: *mut Settings);
+}
 extern "C" {
     pub fn _rmt_Settings() -> *mut Settings;
 }
