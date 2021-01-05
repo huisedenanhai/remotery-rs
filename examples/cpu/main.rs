@@ -1,7 +1,8 @@
 use remotery_rs::{cpu_sample, Remotery, SampleFlags, Settings};
 
 fn main() {
-    let remotery = unsafe { Remotery::create(Settings::default()) }.unwrap();
+    let remotery = unsafe { Remotery::new(Settings::default()) }.unwrap();
+    remotery.set_current_thread_name("CPU Example");
     let mut iter_count = 0;
     loop {
         cpu_sample!(remotery, "scope outer");

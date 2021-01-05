@@ -14,3 +14,6 @@ dx11 = []
 metal = []
 opengl = []
 posix-thread-names = []
+
+[dev-dependencies]
+glium = "0.29"

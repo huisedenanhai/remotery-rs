@@ -9,6 +9,9 @@ pub struct Remotery {
 impl Drop for Remotery {
     fn drop(&mut self) {
         unsafe {
+            #[cfg(feature = "opengl")]
+            ffi::opengl::_rmt_UnbindOpenGL();
+
             ffi::_rmt_DestroyGlobalInstance(self.ptr);
         }
     }
@@ -16,11 +19,14 @@ impl Drop for Remotery {
 
 impl Remotery {
     // there can only be one Remotery instance
-    pub unsafe fn create(settings: Settings) -> Result<Remotery, Error> {
+    pub unsafe fn new(settings: Settings) -> Result<Remotery, Error> {
         let mut remotery: *mut ffi::Remotery = std::ptr::null_mut();
         *ffi::_rmt_Settings().as_mut().unwrap() = settings;
         let error = ffi::_rmt_CreateGlobalInstance(&mut remotery as *mut *mut ffi::Remotery);
         if error == Error::None {
+            #[cfg(feature = "opengl")]
+            ffi::opengl::_rmt_BindOpenGL();
+
             Ok(Remotery { ptr: remotery })
         } else {
             Err(error)
@@ -85,7 +91,7 @@ macro_rules! cpu_sample {
 
 #[test]
 fn test_cpu_sample_macro() {
-    let remotery = unsafe { Remotery::create(Settings::default()) }.unwrap();
+    let remotery = unsafe { Remotery::new(Settings::default()) }.unwrap();
     {
         cpu_sample!(remotery, "scope outer");
         {

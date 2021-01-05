@@ -364,7 +364,7 @@ extern "C" {
 }
 
 #[cfg(feature = "cuda")]
-mod cuda {
+pub mod cuda {
     use super::*;
 
     #[repr(C)]
@@ -490,7 +490,7 @@ mod cuda {
 }
 
 #[cfg(feature = "dx11")]
-mod dx11 {
+pub mod dx11 {
     use super::*;
     extern "C" {
         pub fn _rmt_BindD3D11(
@@ -510,7 +510,7 @@ mod dx11 {
 }
 
 #[cfg(feature = "opengl")]
-mod opengl {
+pub mod opengl {
     use super::*;
     extern "C" {
         pub fn _rmt_BindOpenGL();
@@ -527,7 +527,7 @@ mod opengl {
 }
 
 #[cfg(feature = "metal")]
-mod metal {
+pub mod metal {
     use super::*;
     extern "C" {
         pub fn _rmt_BeginMetalSample(name: PStr, hash_cache: *mut U32);
