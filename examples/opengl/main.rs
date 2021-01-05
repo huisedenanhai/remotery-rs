@@ -13,32 +13,26 @@ fn main() {
     let cb = glium::glutin::ContextBuilder::new();
     let display = glium::Display::new(wb, cb, &event_loop).unwrap();
 
-    let remotery = unsafe { Remotery::new(Settings::default()) }.unwrap();
-
     // building the vertex buffer, which contains all the vertices that we will draw
     let vertex_buffer = {
         #[derive(Copy, Clone)]
         struct Vertex {
             position: [f32; 2],
-            color: [f32; 3],
         }
 
-        implement_vertex!(Vertex, position, color);
+        implement_vertex!(Vertex, position);
 
         glium::VertexBuffer::new(
             &display,
             &[
                 Vertex {
                     position: [-0.5, -0.5],
-                    color: [0.0, 1.0, 0.0],
                 },
                 Vertex {
                     position: [0.0, 0.5],
-                    color: [0.0, 0.0, 1.0],
                 },
                 Vertex {
                     position: [0.5, -0.5],
-                    color: [1.0, 0.0, 0.0],
                 },
             ],
         )
@@ -51,85 +45,28 @@ fn main() {
 
     // compiling shaders and linking them together
     let program = program!(&display,
-        140 => {
-            vertex: "
+         140 => {
+             vertex: "
                 #version 140
-                uniform mat4 matrix;
                 in vec2 position;
-                in vec3 color;
-                out vec3 vColor;
                 void main() {
-                    gl_Position = vec4(position, 0.0, 1.0) * matrix;
-                    vColor = color;
+                    gl_Position = vec4(position, 0.0, 1.0);
                 }
             ",
 
-            fragment: "
+             fragment: "
                 #version 140
-                in vec3 vColor;
                 out vec4 f_color;
                 void main() {
-                    f_color = vec4(vColor, 1.0);
+                    f_color = vec4(0.5, 0.0, 0.5, 1.0);
                 }
             "
-        },
-
-        110 => {
-            vertex: "
-                #version 110
-                uniform mat4 matrix;
-                attribute vec2 position;
-                attribute vec3 color;
-                varying vec3 vColor;
-                void main() {
-                    gl_Position = vec4(position, 0.0, 1.0) * matrix;
-                    vColor = color;
-                }
-            ",
-
-            fragment: "
-                #version 110
-                varying vec3 vColor;
-                void main() {
-                    gl_FragColor = vec4(vColor, 1.0);
-                }
-            ",
-        },
-
-        100 => {
-            vertex: "
-                #version 100
-                uniform lowp mat4 matrix;
-                attribute lowp vec2 position;
-                attribute lowp vec3 color;
-                varying lowp vec3 vColor;
-                void main() {
-                    gl_Position = vec4(position, 0.0, 1.0) * matrix;
-                    vColor = color;
-                }
-            ",
-
-            fragment: "
-                #version 100
-                varying lowp vec3 vColor;
-                void main() {
-                    gl_FragColor = vec4(vColor, 1.0);
-                }
-            ",
-        },
+         },
     )
     .unwrap();
 
+    let remotery = unsafe { Remotery::new(Settings::default()) }.unwrap();
     let draw = move || {
-        // building the uniforms
-        let uniforms = uniform! {
-            matrix: [
-                [1.0, 0.0, 0.0, 0.0],
-                [0.0, 1.0, 0.0, 0.0],
-                [0.0, 0.0, 1.0, 0.0],
-                [0.0, 0.0, 0.0, 1.0f32]
-            ]
-        };
         remotery.log_text("frame");
 
         opengl_sample!(remotery, "Frame");
@@ -143,7 +80,7 @@ fn main() {
                     &vertex_buffer,
                     &index_buffer,
                     &program,
-                    &uniforms,
+                    &uniform! {},
                     &Default::default(),
                 )
                 .unwrap();

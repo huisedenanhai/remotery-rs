@@ -1,4 +1,4 @@
-use remotery_rs::{cpu_sample, Remotery, SampleFlags, Settings};
+use remotery_rs::{cpu_sample, Remotery, Settings};
 
 fn main() {
     let remotery = unsafe { Remotery::new(Settings::default()) }.unwrap();

@@ -81,7 +81,7 @@ impl<'a> Drop for CpuSample<'a> {
 #[macro_export]
 macro_rules! cpu_sample {
     ($rmt: expr, $name: expr) => {
-        cpu_sample!($rmt, $name, SampleFlags::None)
+        cpu_sample!($rmt, $name, $crate::SampleFlags::None)
     };
     ($rmt: expr, $name: expr, $flags: expr) => {
         static mut HASH_CACHE: u32 = 0;
