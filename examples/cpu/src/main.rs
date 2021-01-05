@@ -1,14 +1,23 @@
+use remotery_rs::{cpu_sample, Remotery, SampleFlags, Settings};
+
 fn main() {
-    unsafe {
-        let mut remotery: *mut Remotery = std::ptr::null_mut();
-        _rmt_CreateGlobalInstance(&mut remotery as *mut *mut Remotery);
-        loop {
-            let mut hash: U32 = 0;
-            let name = CString::new("hello rust").unwrap();
-            _rmt_BeginCPUSample(name.as_ptr(), SampleFlags::None as u32, &mut hash);
-            _rmt_EndCPUSample();
+    let remotery = unsafe { Remotery::create(Settings::default()) }.unwrap();
+    let mut iter_count = 0;
+    loop {
+        cpu_sample!(remotery, "scope outer");
+        let one_hundred_ms = std::time::Duration::from_millis(100);
+        std::thread::sleep(one_hundred_ms);
+        {
+            cpu_sample!(remotery, "scope 1");
+            let ten_ms = std::time::Duration::from_millis(10);
+            std::thread::sleep(ten_ms);
         }
-        _rmt_DestroyGlobalInstance(remotery);
+        {
+            cpu_sample!(remotery, "scope 2");
+            let twenty_ms = std::time::Duration::from_millis(20);
+            std::thread::sleep(twenty_ms);
+        }
+        iter_count += 1;
+        remotery.log_text(&format!("iter {}", iter_count))
     }
-    println!("Hello, world!");
 }
