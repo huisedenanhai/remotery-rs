@@ -530,6 +530,12 @@ pub mod opengl {
 pub mod metal {
     use super::*;
     extern "C" {
+        pub fn _rmt_BindMetal(command_buffer: *mut ::std::os::raw::c_void);
+    }
+    extern "C" {
+        pub fn _rmt_UnbindMetal();
+    }
+    extern "C" {
         pub fn _rmt_BeginMetalSample(name: PStr, hash_cache: *mut U32);
     }
     extern "C" {

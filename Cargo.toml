@@ -16,4 +16,20 @@ opengl = []
 posix-thread-names = []
 
 [dev-dependencies]
+cocoa = "*"
+foreign-types = "*"
 glium = "0.29"
+metal-rs = {version = "0.20", package = 'metal'}
+objc = "*"
+winit = "*"
+
+[[example]]
+name = "cpu"
+
+[[example]]
+name = "opengl"
+required-features = ["opengl"]
+
+[[example]]
+name = "metal"
+required-features = ["metal"]
