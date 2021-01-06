@@ -1,6 +1,7 @@
 [package]
 authors = ["huisedenanhai <winser@pku.edu.cn>"]
-edition = "2018"
+license = "MIT"
+edition = "2020"
 name = "remotery-rs"
 version = "0.1.0"
 
